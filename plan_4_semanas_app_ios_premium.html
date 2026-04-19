@@ -1,0 +1,279 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Plan 4 Semanas" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="apple-touch-icon" href="fitness_app_icon.png" />
+  <title>Plan 4 Semanas</title>
+  <style>
+    :root{
+      --bg:#f1f5f9; --card:#ffffff; --muted:#64748b; --text:#0f172a; --border:#e2e8f0;
+      --dark:#0f172a; --green:#10b981; --amber:#f59e0b; --rose:#e11d48; --blue:#0ea5e9;
+    }
+    *{box-sizing:border-box;-webkit-tap-highlight-color: transparent}
+    html,body{margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+    body{padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom)}
+    .launch{
+      background: linear-gradient(160deg, #0f172a 0%, #0f766e 100%);
+      color:white; padding:22px 18px 24px; border-bottom-left-radius:30px; border-bottom-right-radius:30px;
+      box-shadow:0 10px 30px rgba(15,23,42,.15)
+    }
+    .launch .badge{display:inline-flex;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);font-size:12px;letter-spacing:.15em;text-transform:uppercase}
+    .launch h1{margin:14px 0 8px;font-size:30px;line-height:1.02}
+    .launch p{margin:0;color:rgba(255,255,255,.84);font-size:14px}
+    .toprow{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+    .iconbubble{width:66px;height:66px;border-radius:20px;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:32px;border:1px solid rgba(255,255,255,.18)}
+    .wrap{max-width:430px;margin:0 auto;padding:14px 14px 30px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:26px;box-shadow:0 8px 24px rgba(15,23,42,.08);padding:18px;margin-bottom:14px}
+    .sticky{position:sticky;top:8px;z-index:5}
+    h2,h3,p{margin:0}
+    h2{font-size:20px}
+    .sub{color:var(--muted);font-size:14px;margin-top:4px}
+    .tiny{font-size:11px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase}
+    .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .grid{display:grid;gap:10px}
+    .grid-2{grid-template-columns:repeat(2,1fr)}
+    .grid-7{grid-template-columns:repeat(7,1fr)}
+    .pill{display:inline-flex;padding:7px 11px;border-radius:999px;font-size:13px;font-weight:700;border:1px solid var(--border)}
+    .week0{background:#dcfce7;color:#166534;border-color:#bbf7d0}
+    .week1{background:#fef3c7;color:#92400e;border-color:#fde68a}
+    .week2{background:#fed7aa;color:#9a3412;border-color:#fdba74}
+    .week3{background:#fecaca;color:#991b1b;border-color:#fca5a5}
+    .block{border:1px solid var(--border);background:#f8fafc;border-radius:18px;padding:12px 14px}
+    .dark{background:var(--dark);color:#fff}
+    .rose{background:#fff1f2;border-color:#fecdd3}
+    .amber{background:#fffbeb;border-color:#fde68a}
+    .sky{background:#f0f9ff;border-color:#bae6fd}
+    .indigo{background:#eef2ff;border-color:#c7d2fe}
+    .btn{border:none;border-radius:18px;padding:13px 14px;font-weight:700;background:#e2e8f0;color:#0f172a;cursor:pointer}
+    .btn.dark{background:#0f172a;color:#fff}
+    .btn.green{background:#10b981;color:#fff}
+    .btn.amber{background:#f59e0b;color:#fff}
+    .btn.ghost{background:transparent;border:1px solid var(--border)}
+    .btn:active{transform:scale(.99)}
+    .center{text-align:center}
+    .progress{height:12px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin-top:8px}
+    .progress > span{display:block;height:100%;background:#0f172a;width:0%}
+    .daybtn{position:relative;border:1px solid var(--border);border-radius:18px;background:#fff;min-height:60px;padding:8px;cursor:pointer}
+    .daybtn.active{outline:2px solid #0f172a}
+    .daybtn.partial{background:#fffbeb;border-color:#fde68a;color:#92400e}
+    .daybtn.done{background:#10b981;border-color:#10b981;color:#fff}
+    .badge-dot{position:absolute;right:6px;bottom:6px;width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.7}
+    .muted{color:var(--muted)}
+    .check{width:100%;display:flex;align-items:center;gap:12px;padding:13px 14px;border:1px solid var(--border);border-radius:18px;background:#f8fafc;cursor:pointer}
+    .check.active{background:#ecfdf5;border-color:#a7f3d0;color:#065f46;font-weight:700}
+    .emoji{font-size:44px}
+    .heroicon{font-size:40px}
+    .aspect{aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(135deg,#e2e8f0,#f8fafc,#cbd5e1);border-radius:18px}
+    .small{font-size:13px}
+    .hint{font-size:12px;color:#475569;margin-top:8px}
+  </style>
+</head>
+<body>
+  <div class="launch">
+    <div class="toprow">
+      <div>
+        <div class="badge">App visual</div>
+        <h1>Plan 4 semanas</h1>
+        <p>Entrenamiento, nutrición y seguimiento diario en tu iPhone.</p>
+      </div>
+      <div class="iconbubble">💪</div>
+    </div>
+    <p class="hint">En Safari: Compartir → Añadir a pantalla de inicio.</p>
+  </div>
+
+  <div class="wrap">
+    <div class="card sticky">
+      <div class="row">
+        <div>
+          <div class="tiny">Modo entrenador personal</div>
+          <h2 style="font-size:26px;margin-top:4px">Plan 4 semanas</h2>
+          <p class="sub">Perder grasa + mantener músculo + bajar barriga más rápido</p>
+        </div>
+        <div class="heroicon">🔥</div>
+      </div>
+      <div style="margin-top:14px">
+        <div class="row small"><span><strong>Progreso del día</strong></span><span id="progressText">0%</span></div>
+        <div class="progress"><span id="progressBar"></span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <h2>Calendario del plan</h2>
+        <div class="small muted">28 días</div>
+      </div>
+      <div class="grid grid-7 small muted center" style="margin-bottom:8px">
+        <div>L</div><div>M</div><div>X</div><div>J</div><div>V</div><div>S</div><div>D</div>
+      </div>
+      <div id="calendar" class="grid grid-7"></div>
+      <div class="grid grid-2" style="margin-top:12px">
+        <div class="block"><div class="small muted">Cumplimiento entreno mes</div><div id="monthWorkout" style="font-size:30px;font-weight:800">0%</div></div>
+        <div class="block"><div class="small muted">Cumplimiento nutrición mes</div><div id="monthNutrition" style="font-size:30px;font-weight:800">0%</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="row" style="margin-bottom:12px">
+        <button id="prevDay" class="btn ghost">‹</button>
+        <div class="center">
+          <div class="small muted">Día seleccionado</div>
+          <div id="selectedTitle" style="font-size:22px;font-weight:800">Lunes · Semana 1</div>
+          <div id="selectedTag" class="sub">🔥 Entreno</div>
+        </div>
+        <button id="nextDay" class="btn ghost">›</button>
+      </div>
+      <div class="grid grid-2" style="margin-bottom:12px">
+        <button class="btn green" id="markWorkoutYes">Marcar entreno ✅</button>
+        <button class="btn" id="markWorkoutNo">No hecho</button>
+        <button class="btn amber" id="markNutritionYes">Nutrición ✅</button>
+        <button class="btn" id="markNutritionNo">Nutrición ❌</button>
+      </div>
+      <div id="weekPill" class="pill week0">Semana 1</div>
+    </div>
+
+    <div class="card" id="dayPlan"></div>
+
+    <div class="card">
+      <h2 style="margin-bottom:12px">Temporizadores</h2>
+      <div class="block dark center" style="padding:22px">
+        <div id="timerLabel" class="small" style="opacity:.8">Listo</div>
+        <div id="timerValue" style="font-size:52px;font-weight:800;margin-top:6px">0:00</div>
+        <div class="grid grid-2" style="margin-top:14px">
+          <button class="btn dark" id="workBtn">Trabajo</button>
+          <button class="btn" id="restBtn">Descanso</button>
+          <button class="btn green" style="grid-column:1 / -1" id="warmBtn">Calentamiento 5 min</button>
+          <button class="btn amber" style="grid-column:1 / -1" id="walkBtn">Caminar 10 min</button>
+          <button class="btn" style="grid-column:1 / -1" id="resetBtn">Reset</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-bottom:6px">Bloque abdomen · 3 días/semana</h2>
+      <p class="sub" style="margin-bottom:12px">Haz 3 vueltas al final del entrenamiento.</p>
+      <div class="grid grid-2" id="absGrid"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-bottom:12px">Guía de ejercicios</h2>
+      <div class="grid" id="exerciseGuide"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-bottom:12px">Plan nutricional del día</h2>
+      <div class="grid" id="meals"></div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-bottom:12px">Estadísticas</h2>
+      <div class="grid grid-2">
+        <div class="block"><div class="small muted">Entrenos semana</div><div id="weekWorkout" style="font-size:30px;font-weight:800">0%</div></div>
+        <div class="block"><div class="small muted">Nutrición semana</div><div id="weekNutrition" style="font-size:30px;font-weight:800">0%</div></div>
+        <div class="block" style="grid-column:1 / -1"><div class="small muted">Días perfectos esta semana</div><div id="weekPerfect" style="font-size:30px;font-weight:800">0/7</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 style="margin-bottom:12px">Checklist diaria</h2>
+      <div class="grid" id="checklist"></div>
+    </div>
+  </div>
+
+  <script>
+    const weeks = [
+      {title:'Semana 1', cls:'week0', rounds:3, strength:['12 sentadillas','10 flexiones','12 zancadas','20” plancha','12 superman'], cardio:'40” trabajo / 20” descanso · 16 min', work:40, rest:20, cardioDetails:['Burpees','Mountain climbers','Jumping jacks','Rodillas altas']},
+      {title:'Semana 2', cls:'week1', rounds:4, strength:['15 sentadillas','12 flexiones','16 zancadas','25” plancha','15 superman'], cardio:'45” trabajo / 15” descanso · 20 min', work:45, rest:15, cardioDetails:['Burpees','Sentadilla rápida o con salto','Mountain climbers','Skipping']},
+      {title:'Semana 3', cls:'week2', rounds:4, strength:['15 sentadillas','12–15 flexiones','20 zancadas','30” plancha','15 superman','+10 burpees'], cardio:'30” fuerte / 30” suave · 20 min', work:30, rest:30, cardioDetails:['Burpees','Rodillas altas','Saltos','Mountain climbers']},
+      {title:'Semana 4', cls:'week3', rounds:5, strength:['15 sentadillas','15 flexiones','20 zancadas','40” plancha','15 superman','12 burpees'], cardio:'20” a tope / 10” descanso · 3–4 bloques Tabata', work:20, rest:10, cardioDetails:['Burpees','Mountain climbers','Jump squats','Rodillas altas']}
+    ];
+    const weekDays = [
+      {day:'Lunes', type:'train', tag:'🔥 Entreno'},
+      {day:'Martes', type:'train', tag:'🔥 Entreno'},
+      {day:'Miércoles', type:'rest', tag:'🚶 Paseo / descanso'},
+      {day:'Jueves', type:'train', tag:'🔥 Entreno'},
+      {day:'Viernes', type:'walk', tag:'🚶 Paseo opcional'},
+      {day:'Sábado', type:'train', tag:'🔥 Entreno'},
+      {day:'Domingo', type:'rest', tag:'🧘 Descanso'}
+    ];
+    const meals = [
+      {label:'Desayuno', text:'Proteína + grasa buena · huevos o yogur con fruta y frutos secos'},
+      {label:'Comida', text:'Proteína + verdura + carbohidrato · pollo/pescado + arroz/patata + ensalada'},
+      {label:'Merienda', text:'Yogur o fruta + frutos secos'},
+      {label:'Cena', text:'Proteína + verdura · más ligera para bajar barriga más rápido'}
+    ];
+    const absBlock = ['20 crunches','15 elevaciones de piernas','30” plancha','20 mountain climbers'];
+    const exercises = [
+      {name:'Sentadilla', emoji:'🏋️', cues:['Baja lento','Pecho arriba','Rodillas estables']},
+      {name:'Flexiones', emoji:'🤸', cues:['Cuerpo recto','Codos ~45º','No hundas la cadera']},
+      {name:'Zancadas', emoji:'🦵', cues:['Paso firme','Torso erguido','Rodilla estable']},
+      {name:'Plancha', emoji:'🧱', cues:['Abdomen apretado','Glúteos activos','Cuerpo alineado']},
+      {name:'Burpees', emoji:'🔥', cues:['Ritmo constante','Salto explosivo','Aterriza suave']},
+      {name:'Mountain climbers', emoji:'⚡', cues:['Core fuerte','Rodillas rápidas','Espalda estable']}
+    ];
+    const checklist = ['Entrenamiento hecho','Cardio hecho','Bloque abdomen hecho','Proteína suficiente','2L de agua','Buen descanso'];
+
+    let selectedCalendarDay = Number(localStorage.getItem('fitness-selected-day') || 1);
+    let dayStatus = JSON.parse(localStorage.getItem('fitness-day-status') || '{}');
+    let timer = null;
+    let secondsLeft = 0;
+
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => document.querySelectorAll(sel);
+    function keyForDay(day){ return `${Math.floor((day-1)/7)}-${(day-1)%7}`; }
+    function stateForDay(day){ return dayStatus[keyForDay(day)] || {}; }
+    function save(){ localStorage.setItem('fitness-day-status', JSON.stringify(dayStatus)); localStorage.setItem('fitness-selected-day', String(selectedCalendarDay)); }
+    function formatTime(secs){ const m = Math.floor(secs/60); const s = secs % 60; return `${m}:${String(s).padStart(2,'0')}`; }
+    function setTimer(secs, label){
+      clearInterval(timer); secondsLeft = secs; $('#timerLabel').textContent = label; $('#timerValue').textContent = formatTime(secondsLeft);
+      timer = setInterval(() => { secondsLeft -= 1; $('#timerValue').textContent = formatTime(Math.max(0, secondsLeft)); if(secondsLeft <= 0){ clearInterval(timer); $('#timerLabel').textContent = 'Hecho'; } }, 1000);
+    }
+    function getProgress(day){ const st = stateForDay(day); const done = checklist.filter(i => st[i]).length; return Math.round((done / checklist.length) * 100); }
+    function getMonthStats(){ const days = Array.from({length:28}, (_,i)=>i+1); const workoutDone = days.filter(d => stateForDay(d)['Entrenamiento hecho']).length; const nutritionDone = days.filter(d => stateForDay(d)['Proteína suficiente']).length; return { workoutPct: Math.round(workoutDone / days.length * 100), nutritionPct: Math.round(nutritionDone / days.length * 100) }; }
+    function getWeekStats(){ const w = Math.floor((selectedCalendarDay-1)/7); const days = Array.from({length:7}, (_,i)=>w*7+i+1); const workoutDone = days.filter(d => stateForDay(d)['Entrenamiento hecho']).length; const nutritionDone = days.filter(d => stateForDay(d)['Proteína suficiente']).length; const fullDone = days.filter(d => checklist.every(item => stateForDay(d)[item])); return { workoutPct: Math.round(workoutDone / 7 * 100), nutritionPct: Math.round(nutritionDone / 7 * 100), fullDone: fullDone.length }; }
+    function quickStatus(type, value){
+      const k = keyForDay(selectedCalendarDay); const idx = (selectedCalendarDay-1) % 7; const meta = weekDays[idx];
+      dayStatus[k] = dayStatus[k] || {};
+      if(type === 'workout'){ dayStatus[k]['Entrenamiento hecho'] = value; dayStatus[k]['Cardio hecho'] = value; if(meta.type === 'train') dayStatus[k]['Bloque abdomen hecho'] = value; }
+      if(type === 'nutrition'){ dayStatus[k]['Proteína suficiente'] = value; if(!value) dayStatus[k]['2L de agua'] = false; }
+      save(); render();
+    }
+    function toggleChecklist(item){ const k = keyForDay(selectedCalendarDay); dayStatus[k] = dayStatus[k] || {}; dayStatus[k][item] = !dayStatus[k][item]; save(); render(); }
+    function renderCalendar(){
+      const container = $('#calendar'); container.innerHTML = '';
+      for(let day=1; day<=28; day++){ const st = stateForDay(day); const done = checklist.filter(i => st[i]).length; const btn = document.createElement('button'); btn.className = 'daybtn'; if(day === selectedCalendarDay) btn.classList.add('active'); if(checklist.every(i => st[i])) btn.classList.add('done'); else if(st['Entrenamiento hecho'] || st['Proteína suficiente']) btn.classList.add('partial'); btn.innerHTML = `<div style="font-size:15px;font-weight:800">${day}</div><div style="font-size:10px;margin-top:2px">${done}/6</div>${done>0?'<div class="badge-dot"></div>':''}`; btn.onclick = () => { selectedCalendarDay = day; save(); render(); }; container.appendChild(btn); }
+    }
+    function renderDayPlan(){
+      const weekIndex = Math.floor((selectedCalendarDay-1)/7); const dayIndex = (selectedCalendarDay-1)%7; const week = weeks[weekIndex]; const meta = weekDays[dayIndex]; const el = $('#dayPlan');
+      if(meta.type === 'train'){ el.innerHTML = `<div class="grid"><div class="block dark"><div style="font-weight:800;margin-bottom:8px">Fuerza · ${week.rounds} vueltas</div><div class="grid">${week.strength.map(i=>`<div class="block" style="background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.1);color:#fff">${i}</div>`).join('')}</div></div><div class="block rose"><div style="font-weight:800;margin-bottom:6px">Cardio</div><div style="font-weight:700">${week.cardio}</div><div class="sub" style="margin-top:6px">${week.cardioDetails.join(' · ')}</div></div><div class="block amber"><div style="font-weight:800;margin-bottom:6px">Extra para bajar barriga</div><div class="small">Caminar rápido 10–15 min después del HIIT.</div></div></div>`; }
+      else if(meta.type === 'walk'){ el.innerHTML = `<div class="block sky"><div style="font-weight:800;margin-bottom:6px">Paseo opcional</div><div style="font-weight:700">40–50 min caminando a ritmo vivo.</div><div class="sub" style="margin-top:6px">Perfecto para sumar gasto sin machacar articulaciones.</div></div>`; }
+      else { el.innerHTML = `<div class="block indigo"><div style="font-weight:800;margin-bottom:6px">Descanso activo</div><div style="font-weight:700">Movilidad suave, paseo corto o descanso total.</div><div class="sub" style="margin-top:6px">Dormir bien y cumplir la nutrición hoy también cuenta.</div></div>`; }
+    }
+    function renderMeals(){ $('#meals').innerHTML = meals.map(m => `<div class="block"><div class="small muted">${m.label}</div><div style="font-weight:700">${m.text}</div></div>`).join(''); }
+    function renderAbs(){ $('#absGrid').innerHTML = absBlock.map(i => `<div class="block center" style="font-weight:700">${i}</div>`).join(''); }
+    function renderExercises(){ $('#exerciseGuide').innerHTML = exercises.map(ex => `<div class="block" style="padding:0;overflow:hidden"><div class="aspect"><div><div class="emoji">${ex.emoji}</div><div style="font-weight:800">${ex.name}</div><div class="small muted">Referencia visual del movimiento</div></div></div><div style="padding:14px"><div style="font-weight:800;margin-bottom:8px">Claves</div><div style="display:flex;flex-wrap:wrap;gap:8px">${ex.cues.map(c => `<span class="pill" style="background:#f8fafc">${c}</span>`).join('')}</div></div></div>`).join(''); }
+    function renderChecklist(){ const st = stateForDay(selectedCalendarDay); $('#checklist').innerHTML = checklist.map(item => { const active = !!st[item]; return `<button class="check ${active ? 'active' : ''}" data-item="${item}"><span style="font-size:20px">${active ? '✅' : '⭕'}</span><span>${item}</span></button>`; }).join(''); $$('#checklist .check').forEach(btn => btn.onclick = () => toggleChecklist(btn.dataset.item)); }
+    function render(){
+      const weekIndex = Math.floor((selectedCalendarDay-1)/7); const dayIndex = (selectedCalendarDay-1)%7; const week = weeks[weekIndex]; const meta = weekDays[dayIndex];
+      $('#selectedTitle').textContent = `${meta.day} · Semana ${weekIndex+1}`; $('#selectedTag').textContent = meta.tag; $('#weekPill').className = `pill ${week.cls}`; $('#weekPill').textContent = week.title; $('#progressText').textContent = `${getProgress(selectedCalendarDay)}%`; $('#progressBar').style.width = `${getProgress(selectedCalendarDay)}%`;
+      const ws = getWeekStats(); const ms = getMonthStats(); $('#weekWorkout').textContent = `${ws.workoutPct}%`; $('#weekNutrition').textContent = `${ws.nutritionPct}%`; $('#weekPerfect').textContent = `${ws.fullDone}/7`; $('#monthWorkout').textContent = `${ms.workoutPct}%`; $('#monthNutrition').textContent = `${ms.nutritionPct}%`;
+      renderCalendar(); renderDayPlan(); renderChecklist(); $('#workBtn').onclick = () => setTimer(week.work, 'Trabajo'); $('#restBtn').onclick = () => setTimer(week.rest, 'Descanso');
+    }
+    $('#prevDay').onclick = () => { selectedCalendarDay = Math.max(1, selectedCalendarDay - 1); save(); render(); };
+    $('#nextDay').onclick = () => { selectedCalendarDay = Math.min(28, selectedCalendarDay + 1); save(); render(); };
+    $('#markWorkoutYes').onclick = () => quickStatus('workout', true);
+    $('#markWorkoutNo').onclick = () => quickStatus('workout', false);
+    $('#markNutritionYes').onclick = () => quickStatus('nutrition', true);
+    $('#markNutritionNo').onclick = () => quickStatus('nutrition', false);
+    $('#warmBtn').onclick = () => setTimer(300, 'Calentamiento');
+    $('#walkBtn').onclick = () => setTimer(600, 'Caminar 10 min');
+    $('#resetBtn').onclick = () => { clearInterval(timer); secondsLeft = 0; $('#timerLabel').textContent = 'Listo'; $('#timerValue').textContent = '0:00'; };
+    renderMeals(); renderAbs(); renderExercises(); render();
+  </script>
+</body>
+</html>
